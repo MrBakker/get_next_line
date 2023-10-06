@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   get_next_line_utils.c                              :+:    :+:            */
+/*   get_next_line_utils_bonus.c                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jbakker <jbakker@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/10/06 12:29:03 by jbakker       #+#    #+#                 */
-/*   Updated: 2023/10/06 12:35:57 by jbakker       ########   odam.nl         */
+/*   Created: 2023/10/06 12:35:39 by jbakker       #+#    #+#                 */
+/*   Updated: 2023/10/06 12:36:44 by jbakker       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	get_new_line_pos(const char *buff)
 {

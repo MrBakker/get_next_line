@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   get_next_line.c                                    :+:    :+:            */
+/*   get_next_line_bonus.c                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jbakker <jbakker@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/10/05 13:16:21 by jbakker       #+#    #+#                 */
-/*   Updated: 2023/10/06 12:43:13 by jbakker       ########   odam.nl         */
+/*   Created: 2023/10/06 12:38:19 by jbakker       #+#    #+#                 */
+/*   Updated: 2023/10/06 12:38:33 by jbakker       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	update_buf(char **buff_ptr, int fd)
 {
@@ -62,7 +62,6 @@ int	main(void)
 {
 	char	*str;
 
-	// int fd1 = open("input.txt");
 	str = get_next_line(0);
 	while (str)
 	{
