@@ -6,11 +6,12 @@
 /*   By: jbakker <jbakker@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 13:16:21 by jbakker       #+#    #+#                 */
-/*   Updated: 2023/10/06 12:43:13 by jbakker       ########   odam.nl         */
+/*   Updated: 2023/10/06 13:19:54 by jbakker       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <fcntl.h>
 
 int	update_buf(char **buff_ptr, int fd)
 {
@@ -18,7 +19,7 @@ int	update_buf(char **buff_ptr, int fd)
 	int		buff_count;
 	int		read_bytes;
 
-	while (get_new_line_pos(*buff_ptr) == -1)
+	while (get_new_line_pos(*buff_ptr) == -1 && *buff_ptr[0])
 	{
 		buff_count = ft_strlen(*buff_ptr);
 		temp_buff = (char *)malloc((buff_count + BUFFER_SIZE + 1));
@@ -32,7 +33,7 @@ int	update_buf(char **buff_ptr, int fd)
 		if (read_bytes == 0)
 			return (0);
 	}
-	return (1);
+	return ((int)*buff_ptr[0]);
 }
 
 char	*get_next_line(int fd)
@@ -42,7 +43,7 @@ char	*get_next_line(int fd)
 	char		*temp;
 	int			index;
 
-	if (!update_buf(&buff, fd) && ft_strlen(buff) == 0)
+	if (!update_buf(&buff, fd))
 		return (0);
 	index = get_new_line_pos(buff);
 	output = (char *)malloc((index + 1) * sizeof(char));
@@ -62,13 +63,13 @@ int	main(void)
 {
 	char	*str;
 
-	// int fd1 = open("input.txt");
-	str = get_next_line(0);
+	int fd1 = open("input.txt", O_RDONLY);
+	str = get_next_line(fd1);
 	while (str)
 	{
 		printf("%s\n", str);
 		free(str);
-		str = get_next_line(0);
+		str = get_next_line(fd1);
 	}
 	return (0);
 }
