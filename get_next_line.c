@@ -54,7 +54,6 @@ char	*get_next_line(int fd)
 {
 	static char	*buff;
 	char		*output;
-
 	int			end;
 
 	update_buffer(&buff, fd);

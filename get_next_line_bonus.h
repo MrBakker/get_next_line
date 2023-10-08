@@ -21,4 +21,13 @@
 # include <stdlib.h>
 # include <stdio.h>
 
+char	*get_next_line(int fd);
+char	*replace_buffer(char **buff, int split);
+char	*ft_memcpy(char *dest, const char *src, size_t len);
+
+int		ft_strlen(const char *buff);
+int		get_new_line(const char *buff, int include_0);
+
+void	update_buffer(char **buff_ptr, int fd);
+
 #endif
