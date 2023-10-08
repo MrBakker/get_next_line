@@ -12,21 +12,21 @@
 
 #include "get_next_line.h"
 
-int	get_new_line_pos(const char *buff)
+int	get_new_line(const char *buff, int include_0)
 {
 	int	index;
 
+	index = 0;
 	if (!buff)
 		return (-1);
-	index = 0;
 	while (buff[index] && buff[index] != '\n')
 		++index;
-	if (buff[index] == '\n')
+	if (buff[index] == '\n' || include_0)
 		return (index);
 	return (-1);
 }
 
-int	ft_strlen(const char *buff)
+int ft_strlen(const char *buff)
 {
 	int	index;
 
@@ -42,8 +42,10 @@ char	*ft_memcpy(char *dest, const char *src, size_t len)
 	char	*ptr;
 
 	index = 0;
+	if (len == 0 || !dest || !src)
+		return (dest);
 	ptr = (char *)dest;
-	while (index < len - 1)
+	while (index + 1 < len)
 	{
 		ptr[index] = src[index];
 		++index;

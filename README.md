@@ -1,3 +1,3 @@
 Prototype, not complete and/or fully tested...
 
-Also, it's a mess now. You might burn your PC with seg faults. Deal with it, will be fixed later xD
+Getting somewhere, should be mostly good now

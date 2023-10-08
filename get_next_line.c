@@ -13,49 +13,62 @@
 #include "get_next_line.h"
 #include <fcntl.h>
 
-int	update_buf(char **buff_ptr, int fd)
+void	update_buffer(char **buff_ptr, int fd)
 {
 	char	*temp_buff;
-	int		buff_count;
-	int		read_bytes;
+	int		chars_read;
 
-	while (get_new_line_pos(*buff_ptr) == -1 && *buff_ptr[0])
+	chars_read = 1;
+	while (get_new_line(*buff_ptr, 0) == -1 && chars_read)
 	{
-		buff_count = ft_strlen(*buff_ptr);
-		temp_buff = (char *)malloc((buff_count + BUFFER_SIZE + 1));
+		temp_buff = (char *)malloc((ft_strlen(*buff_ptr) + BUFFER_SIZE + 1));
 		if (!temp_buff)
-			return (0);
-		ft_memcpy(temp_buff, *buff_ptr, buff_count + 1);
-		read_bytes = read(fd, (void *)(temp_buff + buff_count), BUFFER_SIZE);
-		temp_buff[buff_count + read_bytes] = '\0';
+			return ;
+		ft_memcpy(temp_buff, *buff_ptr, ft_strlen(*buff_ptr) + 1);
+		chars_read = read(fd, (temp_buff + ft_strlen(*buff_ptr)), BUFFER_SIZE);
+		temp_buff[ft_strlen(*buff_ptr) + chars_read] = '\0';
 		free(*buff_ptr);
 		*buff_ptr = temp_buff;
-		if (read_bytes == 0)
-			return (0);
+		if (chars_read <= 0)
+			return ;
 	}
-	return ((int)*buff_ptr[0]);
+}
+
+char	*replace_buffer(char **buff, int split)
+{
+	char	*temp_buff;
+
+	temp_buff = NULL;
+	if (ft_strlen(*buff) - split > 0)
+	{
+		temp_buff = (char *)malloc((ft_strlen(*buff) - split) * sizeof(char));
+		if (!temp_buff)
+			return (NULL);
+		ft_memcpy(temp_buff, (void *)(*buff + split + 1), ft_strlen(*buff) - split);
+	}
+	free(*buff);
+	return (temp_buff);
 }
 
 char	*get_next_line(int fd)
 {
 	static char	*buff;
 	char		*output;
-	char		*temp;
-	int			index;
 
-	if (!update_buf(&buff, fd))
-		return (0);
-	index = get_new_line_pos(buff);
-	output = (char *)malloc((index + 1) * sizeof(char));
+	int			end;
+
+	update_buffer(&buff, fd);
+	end = get_new_line(buff, 1);
+	if (end <= 0 && (!buff || !buff[0]))
+	{
+		free(buff);
+		return (NULL);
+	}
+	output = (char *)malloc((end + 1) * sizeof(char));
 	if (!output)
-		return (0);
-	ft_memcpy(output, buff, index + 1);
-	temp = (char *)malloc((ft_strlen(buff) - index) * sizeof(char));
-	if (!temp)
-		return (0);
-	ft_memcpy(temp, buff + index + 1, (ft_strlen(buff) - index));
-	free(buff);
-	buff = temp;
+		return (NULL);
+	ft_memcpy(output, buff, end + 1);
+	buff = replace_buffer(&buff, end);
 	return (output);
 }
 
@@ -71,5 +84,6 @@ int	main(void)
 		free(str);
 		str = get_next_line(fd1);
 	}
+	free(str);
 	return (0);
 }

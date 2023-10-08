@@ -21,11 +21,4 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-// char	*get_next_line(int fd);
-// char	*ft_memcpy(char *dest, const char *src, size_t len);
-
-// int		ft_strlen(const char *buff);
-// int		get_new_line_pos(const char *buff);
-// int		update_buf(char **buff_ptr, int fd);
-
 #endif
