@@ -6,7 +6,7 @@
 /*   By: jbakker <jbakker@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 13:16:21 by jbakker       #+#    #+#                 */
-/*   Updated: 2023/10/06 13:19:54 by jbakker       ########   odam.nl         */
+/*   Updated: 2023/10/09 13:14:35 by jbakker       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,18 @@ void	update_buffer(char **buff_ptr, int fd)
 
 char	*replace_buffer(char **buff, int split)
 {
-	char	*temp_buff;
+	char	*t_buf;
 
-	temp_buff = NULL;
+	t_buf = NULL;
 	if (ft_strlen(*buff) - split > 0)
 	{
-		temp_buff = (char *)malloc((ft_strlen(*buff) - split) * sizeof(char));
-		if (!temp_buff)
+		t_buf = (char *)malloc((ft_strlen(*buff) - split) * sizeof(char));
+		if (!t_buf)
 			return (NULL);
-		ft_memcpy(temp_buff, (void *)(*buff + split + 1), ft_strlen(*buff) - split);
+		ft_memcpy(t_buf, (void *)(*buff + split + 1), ft_strlen(*buff) - split);
 	}
 	free(*buff);
-	return (temp_buff);
+	return (t_buf);
 }
 
 char	*get_next_line(int fd)
@@ -63,26 +63,26 @@ char	*get_next_line(int fd)
 		free(buff);
 		return (NULL);
 	}
-	output = (char *)malloc((end + 1) * sizeof(char));
+	output = (char *)malloc((end + 2) * sizeof(char));
 	if (!output)
 		return (NULL);
-	ft_memcpy(output, buff, end + 1);
+	ft_memcpy(output, buff, end + 2);
 	buff = replace_buffer(&buff, end);
 	return (output);
 }
 
-int	main(void)
-{
-	char	*str;
+// int	main(void)
+// {
+// 	char	*str;
 
-	int fd1 = open("input.txt", O_RDONLY);
-	str = get_next_line(fd1);
-	while (str)
-	{
-		printf("%s\n", str);
-		free(str);
-		str = get_next_line(fd1);
-	}
-	free(str);
-	return (0);
-}
+// 	int fd1 = open("input.txt", O_RDONLY);
+// 	str = get_next_line(fd1);
+// 	while (str)
+// 	{
+// 		printf("%s\n", str);
+// 		free(str);
+// 		str = get_next_line(fd1);
+// 	}
+// 	free(str);
+// 	return (0);
+// }

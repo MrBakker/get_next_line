@@ -6,7 +6,7 @@
 /*   By: jbakker <jbakker@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/06 12:29:03 by jbakker       #+#    #+#                 */
-/*   Updated: 2023/10/06 12:35:57 by jbakker       ########   odam.nl         */
+/*   Updated: 2023/10/09 13:13:54 by jbakker       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	get_new_line(const char *buff, int include_0)
 	return (-1);
 }
 
-int ft_strlen(const char *buff)
+int	ft_strlen(const char *buff)
 {
 	int	index;
 
