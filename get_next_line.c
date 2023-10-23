@@ -6,7 +6,7 @@
 /*   By: jbakker <jbakker@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/05 13:16:21 by jbakker       #+#    #+#                 */
-/*   Updated: 2023/10/09 13:14:35 by jbakker       ########   odam.nl         */
+/*   Updated: 2023/10/23 11:54:02 by jbakker       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,14 @@ void	update_buffer(char **buff_ptr, int fd)
 			return ;
 		ft_memcpy(temp_buff, *buff_ptr, ft_strlen(*buff_ptr) + 1);
 		chars_read = read(fd, (temp_buff + ft_strlen(*buff_ptr)), BUFFER_SIZE);
-		temp_buff[ft_strlen(*buff_ptr) + chars_read] = '\0';
+		temp_buff[ft_strlen(*buff_ptr) + ft_max(chars_read, 0)] = '\0';
+		if (chars_read <= 0)
+		{
+			free(temp_buff);
+			return ;
+		}
 		free(*buff_ptr);
 		*buff_ptr = temp_buff;
-		if (chars_read <= 0)
-			return ;
 	}
 }
 
@@ -46,16 +49,19 @@ char	*replace_buffer(char **buff, int split)
 			return (NULL);
 		ft_memcpy(t_buf, (void *)(*buff + split + 1), ft_strlen(*buff) - split);
 	}
-	free(*buff);
+	if (*buff)
+		free(*buff);
 	return (t_buf);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*buff;
+	static char	*buff = NULL;
 	char		*output;
 	int			end;
 
+	if (BUFFER_SIZE <= 0 || fd < 0 || fd > 10240)
+		return (NULL);
 	update_buffer(&buff, fd);
 	end = get_new_line(buff, 1);
 	if (end <= 0 && (!buff || !buff[0]))

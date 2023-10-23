@@ -6,7 +6,7 @@
 /*   By: jbakker <jbakker@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/06 12:29:03 by jbakker       #+#    #+#                 */
-/*   Updated: 2023/10/09 13:13:54 by jbakker       ########   odam.nl         */
+/*   Updated: 2023/10/23 11:31:50 by jbakker       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,21 @@ int	ft_strlen(const char *buff)
 	int	index;
 
 	index = 0;
+	if (!buff)
+		return (0);
 	while (buff && buff[index])
 		++index;
 	return (index);
 }
 
-char	*ft_memcpy(char *dest, const char *src, size_t len)
+void	ft_memcpy(const char *dest, const char *src, size_t len)
 {
 	size_t	index;
 	char	*ptr;
 
 	index = 0;
 	if (len == 0 || !dest || !src)
-		return (dest);
+		return ;
 	ptr = (char *)dest;
 	while (index + 1 < len)
 	{
@@ -51,5 +53,9 @@ char	*ft_memcpy(char *dest, const char *src, size_t len)
 		++index;
 	}
 	ptr[index] = '\0';
-	return (dest);
+}
+
+int	ft_max(int a, int b)
+{
+	return ((a < b) * b + (a >= b) * a);
 }
